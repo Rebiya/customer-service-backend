@@ -1,54 +1,41 @@
-//import the login service
 const loginService = require("../../services/AUTH/login.service.js");
-//import the jwt module
-const jwt = require("jsonwebtoken");
-//import the jwt secrete key from the environment variable
-const jwtSecret = process.env.JWT_KEY;
+const userService = require("../../services/user.service.js");
 
-//function to login the user
 const login = async (req, res) => {
   try {
     const userData = req.body;
-    // console.log(userData);
+    console.log("Login request received:", userData);
 
-    //call the login service to authenticate the user
-    const user = await loginService.login(userData);
+    // Fetch user details
+    const user = await userService.getUserByEmail(userData.user_email);
 
-    //if user is not found
-    if (user.status === "fail") {
+    if (!user || user.length === 0) {
       return res
         .status(403)
-        .json({ message: user.message, status: user.status });
+        .json({ message: "User not found", status: "fail" });
     }
 
-    //if successful ,send a response to the client
-    const payload = {
-      employee_id: user.data.employee_id,
-      employee_first_name: user.data.employee_first_name,
-      employee_last_name: user.data.employee_last_name,
-      employee_email: user.data.employee_email,
-      employee_phone: user.data.employee_phone,
-      employee_role: user.data.company_role_id,
-    };
+    // Call login service
+    const result = await loginService.login(userData);
+    console.log("Login result:", result);
 
-    const token = jwt.sign(payload, jwtSecret, { expiresIn: "18h" });
+    if (result.status === "fail") {
+      return res.status(403).json({ message: result.message, status: "fail" });
+    }
 
-    // console.log(token);
-
-    const sendBack = {
-      employee_token: token,
-    };
-
-    return res
-      .status(200)
-      .json({ token: token, status: user.status, message: "login successful" });
+    return res.status(200).json({
+      message: "Login successful",
+      status: "success",
+      accessToken: result.accessToken,
+      refreshToken: result.refreshToken,
+      user: result.user, // Return user details
+    });
   } catch (error) {
-    //if any error occurs send the error response
+    console.error("Login error:", error);
     return res
       .status(500)
-      .json({ message: "something went wrong on logging in" });
+      .json({ message: "Something went wrong during login." });
   }
 };
 
-//export the login function
 module.exports = { login };

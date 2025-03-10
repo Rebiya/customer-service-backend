@@ -1,15 +1,13 @@
-//import the express module
 const express = require("express");
-//call the router method from the express to create router
 const router = express.Router();
-//import the login controller
+const authMiddleware = require("../middlewares/auth.middleware");
 const userController = require("../controllers/user.controller.js");
-//create a route to handle the login request on post
+
+// Routes
 router.get("/users", userController.getAllUsers);
+router.get("/users/:id", userController.getUserById); // Fixed param syntax
+router.put("/users/:id", authMiddleware([3]), userController.updateUser);
+router.delete("/users/:id", authMiddleware([3]), userController.deleteUser);
 router.post("/users", userController.createUser);
-router.get("/users/{id}", userController.getUserById);
-router.put("/users/{id}", userController.updateUser);
-router.delete("/users/{id}", userController.deleteUser);
-router.get("/users", userController.getUserByEmail);
-//export the router
+
 module.exports = router;

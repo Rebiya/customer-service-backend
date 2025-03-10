@@ -10,6 +10,7 @@ const dbConfig = {
 };
 
 const pool = mysql.createPool(dbConfig);
+
 // Test Database Connection
 (async () => {
   try {
@@ -31,5 +32,5 @@ async function query(sql, params) {
     throw new Error("Database operation failed");
   }
 }
-module.exports = { query };
 
+module.exports = { query };

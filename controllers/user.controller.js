@@ -1,74 +1,84 @@
-//import the user service
 const userService = require("../services/user.service.js");
+const bcrypt = require("bcrypt");
 
-//controller for getting all users
+// Get all users
 const getAllUsers = async (req, res) => {
   try {
     const users = await userService.getAllUsers();
-    return res.status(200).json({ users: users });
+    return res.status(200).json({ users });
   } catch (error) {
-    return res.status(500).json({ message: "something went wrong on getting users" });
+    console.error("Error fetching users:", error);
+    return res.status(500).json({ message: "Error fetching users", error });
   }
 };
-//controller for getting a user by id
+
+// Get user by ID
 const getUserById = async (req, res) => {
   try {
-    const user_id = req.params.id;
-    const user = await userService.getUserById(user_id);
-    return res.status(200).json({ user: user });
+    const user = await userService.getUserById(req.params.id);
+    if (!user) return res.status(404).json({ message: "User not found" });
+    return res.status(200).json({ user });
   } catch (error) {
-    return res.status(500).json({ message: "something went wrong on getting user" });
+    console.error("Error fetching user:", error);
+    return res.status(500).json({ message: "Error fetching user", error });
   }
 };
-//controller for creating a user
+
+// Create user (password hashing added)
 const createUser = async (req, res) => {
   try {
-    const user = req.body;
-    const result = await userService.createUser(user);
-    return res.status(200).json({ message: "user created successfully" });
+    const { user_pass, ...userData } = req.body;
+    if (!user_pass) {
+      return res.status(400).json({ message: "Password is required" });
+    }
+    const hashedPassword = await bcrypt.hash(user_pass, 10);
+    const newUser = { ...userData, user_pass: hashedPassword };
+
+    const result = await userService.createUser(newUser);
+    return res
+      .status(201)
+      .json({ message: "User created successfully", user_id: result.insertId });
   } catch (error) {
-    return res.status(500).json({ message: "something went wrong on creating user" });
+    console.error("Error creating user:", error);
+    return res.status(500).json({ message: "Error creating user", error });
   }
 };
-//controller for updating a user
+
+// Update user
 const updateUser = async (req, res) => {
   try {
-    const user = req.body;
-    const result = await userService.updateUser(user);
-    return res.status(200).json({ message: "user updated successfully" });
+    const { id } = req.params;
+    const updatedData = req.body;
+
+    const user = await userService.updateUser(id, updatedData);
+    if (!user) return res.status(404).json({ message: "User not found" });
+
+    return res.status(200).json({ message: "User updated successfully" });
   } catch (error) {
-    return res
-      .status(500)
-      .json({ message: "something went wrong on updating user" });
+    console.error("Error updating user:", error);
+    return res.status(500).json({ message: "Error updating user", error });
   }
 };
-//controller for deleting a user
+
+// Delete user
 const deleteUser = async (req, res) => {
   try {
-    const user_id = req.params.id;
-    const result = await userService.deleteUser(user_id);
-    return res.status(200).json({ message: "user deleted successfully" });
+    const { id } = req.params;
+    const result = await userService.deleteUser(id);
+    if (result.affectedRows === 0)
+      return res.status(404).json({ message: "User not found" });
+
+    return res.status(200).json({ message: "User deleted successfully" });
   } catch (error) {
-    return res.status(500).json({ message: "something went wrong on deleting user" });
+    console.error("Error deleting user:", error);
+    return res.status(500).json({ message: "Error deleting user", error });
   }
 };
-//controller for getting a user by email
-const getUserByEmail = async (req, res) => {
-  try {
-    const user_email = req.params.email;
-    const user = await userService.getUserByEmail(user_email);
-    return res.status(200).json({ user: user });
-  } catch (error) {
-    return res.status(500).json({ message: "something went wrong on getting user" });
-  }
-};
- 
-//export the controllers
+
 module.exports = {
   getAllUsers,
   createUser,
   getUserById,
   updateUser,
   deleteUser,
-  getUserByEmail,
 };
