@@ -67,7 +67,7 @@ async function getUserByEmail(user_email) {
 
     console.log("Query Result:", rows); // Debugging log
 
-    return rows.length ? rows : []; // Always return an array
+    return rows; // Always return an array
   } catch (error) {
     console.error("Database Error:", error);
     return [];
