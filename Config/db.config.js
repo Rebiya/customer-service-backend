@@ -31,5 +31,5 @@ async function query(sql, params) {
     throw new Error("Database operation failed");
   }
 }
+module.exports = { query };
 
-module.exports = query;

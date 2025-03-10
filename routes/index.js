@@ -6,9 +6,13 @@ const router = express.Router();
 const migrateRouter = require("./migrate.route.js");
 //use the router to handle requests
 router.use(migrateRouter);
-//import the login router
-// const loginRouter = require("./login.routes.js");
+// import the login router
+const loginRouter = require("./Auth/login.route.js");
 //use the router to handle requests
-// router.use(loginRouter);
+router.use(loginRouter);
+//import the user router
+const userRouter = require("./user.route.js");
+//use the router to handle requests
+router.use(userRouter);
 //export the router
 module.exports = router;
