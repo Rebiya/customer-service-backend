@@ -14,7 +14,7 @@ const authMiddleware = (requiredRoles) => {
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
       req.user = decoded;
 
-      if (!requiredRoles.includes(decoded.role)) {
+      if (!requiredRoles.includes(decoded.role_id)) {
         return res
           .status(403)
           .json({ message: "Access denied. Insufficient privileges." });
