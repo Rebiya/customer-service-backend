@@ -1,6 +1,7 @@
 const db = require("../../Config/db.config");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const userService = require("../user.service.js");
 
 const generateAccessToken = (user) => {
   return jwt.sign(
@@ -15,7 +16,7 @@ const generateAccessToken = (user) => {
       role_id: user.role_id,
     },
     process.env.JWT_SECRET,
-    { expiresIn: "2h" }
+    { expiresIn: "1h" }
   );
 };
 
@@ -49,19 +50,23 @@ const signup = async (userData) => {
       role_id,
     } = userData;
 
-    // Check if the user already exists
-    const [existingUser] = await db.query(
-      "SELECT * FROM users WHERE user_email = ?",
-      [user_email]
-    );
-    if (existingUser.length > 0) {
+    console.log(userData);
+
+    // Normalize and check if user exists
+    const userEmail = user_email?.trim().toLowerCase();
+    console.log("📧 Normalized Email:", userEmail);
+
+    const userExist = await userService.getUserByEmail(userEmail);
+    console.log("👤 User Found:", userExist);
+
+    if (userExist) {
       return { status: "fail", message: "User already exists" };
     }
 
-    // Hash password
+    // Hash password securely
     const hashedPassword = await bcrypt.hash(user_pass, 10);
 
-    // Insert new user into the database
+    // Insert user into database
     const [result] = await db.query(
       "INSERT INTO users (user_email, user_pass, user_first_name, user_last_name, user_phone_number, role_id) VALUES (?, ?, ?, ?, ?, ?)",
       [
@@ -74,15 +79,14 @@ const signup = async (userData) => {
       ]
     );
 
-    // Fetch newly created user
-    const [newUser] = await db.query("SELECT * FROM users WHERE user_id = ?", [
+    // Fetch newly created user with correct query
+    const [[user]] = await db.query("SELECT * FROM users WHERE user_id = ?", [
       result.insertId,
     ]);
-    if (!newUser.length) {
+
+    if (!user) {
       return { status: "fail", message: "User registration failed" };
     }
-
-    const user = newUser[0];
 
     // Generate tokens
     const accessToken = generateAccessToken(user);
@@ -93,6 +97,7 @@ const signup = async (userData) => {
       message: "Signup successful",
       accessToken,
       refreshToken,
+      user,
     };
   } catch (error) {
     console.error("❌ Error during signup:", error);
