@@ -1,7 +1,7 @@
+const userService = require("../user.service.js");
 const db = require("../../Config/db.config");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const userService = require("../user.service.js");
 
 const generateAccessToken = (user) => {
   return jwt.sign(
@@ -49,17 +49,15 @@ const signup = async (userData) => {
       user_phone_number,
       role_id,
     } = userData;
-
-    console.log(userData);
-
-    // Normalize and check if user exists
     const userEmail = user_email?.trim().toLowerCase();
     console.log("📧 Normalized Email:", userEmail);
 
-    const userExist = await userService.getUserByEmail(userEmail);
-    console.log("👤 User Found:", userExist);
+    // Check if user already exists
+    const existingUser = await userService.getUserByEmail(userEmail);
+    console.log("🔍 Checking existing user:", existingUser);
 
-    if (userExist) {
+    if (existingUser) {
+      console.log("🚫 User already exists, rejecting signup.");
       return { status: "fail", message: "User already exists" };
     }
 
@@ -70,7 +68,7 @@ const signup = async (userData) => {
     const [result] = await db.query(
       "INSERT INTO users (user_email, user_pass, user_first_name, user_last_name, user_phone_number, role_id) VALUES (?, ?, ?, ?, ?, ?)",
       [
-        user_email,
+        userEmail,
         hashedPassword,
         user_first_name,
         user_last_name,
@@ -79,7 +77,7 @@ const signup = async (userData) => {
       ]
     );
 
-    // Fetch newly created user with correct query
+    // Fetch newly created user
     const [[user]] = await db.query("SELECT * FROM users WHERE user_id = ?", [
       result.insertId,
     ]);

@@ -10,6 +10,8 @@ router.use(migrateRouter);
 const loginRouter = require("./Auth/login.route.js");
 //import signup router
 const signupRouter = require("./Auth/signup.route.js");
+//use the signup router to handle requests
+router.use(signupRouter);
 //use the router to handle requests
 router.use(loginRouter);
 //import the user router
