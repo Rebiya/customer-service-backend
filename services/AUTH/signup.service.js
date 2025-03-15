@@ -20,23 +20,6 @@ const generateAccessToken = (user) => {
   );
 };
 
-const generateRefreshToken = (user) => {
-  return jwt.sign(
-    {
-      user_id: user.user_id,
-      user_email: user.user_email,
-      user_first_name: user.user_first_name,
-      user_last_name: user.user_last_name,
-      user_phone_number: user.user_phone_number,
-      user_img: user.user_img,
-      active_user_status: user.active_user_status,
-      role_id: user.role_id,
-    },
-    process.env.JWT_REFRESH_SECRET,
-    { expiresIn: "1d" }
-  );
-};
-
 const signup = async (userData) => {
   console.log("📩 Signup Request Received:", userData);
 
@@ -103,13 +86,11 @@ const signup = async (userData) => {
 
     // ✅ Generate tokens
     const accessToken = generateAccessToken(newUser);
-    const refreshToken = generateRefreshToken(newUser);
 
     return {
       status: "success",
       message: "Signup successful",
       accessToken,
-      refreshToken,
       user: newUser,
     };
   } catch (error) {
@@ -118,4 +99,4 @@ const signup = async (userData) => {
   }
 };
 
-module.exports = { signup, generateAccessToken, generateRefreshToken };
+module.exports = { signup, generateAccessToken};

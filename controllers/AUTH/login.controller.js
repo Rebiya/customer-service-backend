@@ -17,7 +17,6 @@ const login = async (req, res) => {
       message: "Login successful",
       status: "success",
       accessToken: user.accessToken,
-      refreshToken: user.refreshToken,
       user: user.user,
     });
   } catch (error) {

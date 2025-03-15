@@ -7,7 +7,7 @@ const userRouter = require("./user.route.js");
 const logoutRouter = require("./Auth/logout.route.js");
 
 //use the imported routers
-// router.use(logoutRouter);
+router.use(logoutRouter);
 router.use(migrateRouter);
 router.use(signupRouter);
 router.use(loginRouter);

@@ -102,7 +102,7 @@ const checkIfUserExists = async (user_email) => {
 };
 
 
-checkIfUserExists("rebiya.musema-ug@aau.edu.et").then(console.log);
+// checkIfUserExists("rebiya.musema-ug@aau.edu.et").then(console.log);
 
 
 module.exports = {

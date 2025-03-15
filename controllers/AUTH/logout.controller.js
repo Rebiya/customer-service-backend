@@ -2,29 +2,29 @@ const logoutService = require("../../services/AUTH/logout.service.js");
 
 const logout = async (req, res) => {
   try {
-    const userData = req.body;
-    console.log("📩 logout request received:", userData);
+    const authHeader = req.headers.authorization;
 
-    // Fetch user details directly in the controller for debugging
-    const user = await logoutService.logout(userData);
-    console.log("🔄 User Response from logoutService:", user);
-
-    if (user.status === "fail") {
-      return res.status(403).json({ message: user.message, status: "fail" });
+    if (!authHeader || !authHeader.startsWith("Bearer ")) {
+      return res
+        .status(401)
+        .json({ message: "Unauthorized: No token provided" });
     }
 
-    return res.status(200).json({
-      message: "logout successful",
-      status: "success",
-      accessToken: user.accessToken,
-      refreshToken: user.refreshToken,
-      user: user.user,
-    });
+    const token = authHeader.split(" ")[1];
+
+    // Call the logout service
+    const result = await logoutService.logout(token);
+
+    if (result.status === "fail") {
+      return res.status(400).json({ message: result.message });
+    }
+
+    return res.status(200).json({ message: "Logout successful" });
   } catch (error) {
-    console.error("❌ logout error:", error);
+    console.error("❌ Logout error:", error);
     return res
       .status(500)
-      .json({ message: "Something went wrong during logout." });
+      .json({ message: "Internal server error during logout." });
   }
 };
 
