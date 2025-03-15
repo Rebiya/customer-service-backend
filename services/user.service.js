@@ -3,7 +3,7 @@ const db = require("../Config/db.config.js");
 // Get all users
 async function getAllUsers() {
   const query = `SELECT * FROM users INNER JOIN roles ON users.role_id = roles.role_id`;
-  return await db.query(query);
+  return await db.query(query); // No changes needed for this, it should work as expected.
 }
 
 // Create user (handles optional user_phone_number & user_img)
@@ -23,14 +23,14 @@ async function createUser(user) {
     user.role_id || 1, // Default role: 1 (if not provided)
   ];
 
-  return await db.query(query, values);
+  return await db.query(query, values); // No changes needed for this.
 }
 
 // Get user by ID
 async function getUserById(user_id) {
   const query = `SELECT * FROM users WHERE user_id = ?`;
-  const [rows] = await db.query(query, [user_id]);
-  return rows.length ? rows[0] : null;
+  const rows = await db.query(query, [user_id]); // No need for destructuring
+  return rows.length ? rows[0] : null; // Check length of rows directly
 }
 
 // Update user (fixes missing parameters)
@@ -50,29 +50,33 @@ async function updateUser(user_id, userData) {
     user_id,
   ];
 
-  return await db.query(query, values);
+  return await db.query(query, values); // No changes needed for this.
 }
 
 // Delete user
 async function deleteUser(user_id) {
   const query = `DELETE FROM users WHERE user_id = ?`;
-  return await db.query(query, [user_id]);
+  return await db.query(query, [user_id]); // No changes needed for this.
 }
+
+// Get user by email (updated to handle single row return)
 async function getUserByEmail(user_email) {
   try {
     const trimmedEmail = user_email.trim().toLowerCase(); // Normalize input
 
     const query = `SELECT * FROM users WHERE LOWER(TRIM(user_email)) = ?`;
-    const [rows] = await db.query(query, [trimmedEmail]);
+    const rows = await db.query(query, [trimmedEmail]);
 
     console.log("Query Result:", rows); // Debugging log
 
-    return rows; // Always return an array
+    return rows.length ? rows[0] : null; // Return the first row if available
   } catch (error) {
     console.error("Database Error:", error);
-    return [];
+    return null; // Return null in case of error
   }
 }
+
+// Check if user exists (updated to handle single row return)
 const checkIfUserExists = async (user_email) => {
   try {
     if (!user_email) {
@@ -88,7 +92,7 @@ const checkIfUserExists = async (user_email) => {
 
     console.log("🔍 Query Result:", rows);
 
-    if (Array.isArray(rows) && rows.length > 0) {
+    if (rows.length > 0) {
       console.log("✅ User found:", rows[0]);
       return true;
     }
@@ -100,10 +104,6 @@ const checkIfUserExists = async (user_email) => {
     return false;
   }
 };
-
-
-// checkIfUserExists("rebiya.musema-ug@aau.edu.et").then(console.log);
-
 
 module.exports = {
   getAllUsers,
