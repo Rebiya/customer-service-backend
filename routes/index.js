@@ -5,8 +5,10 @@ const loginRouter = require("./Auth/login.route.js");
 const signupRouter = require("./Auth/signup.route.js");
 const userRouter = require("./user.route.js");
 const logoutRouter = require("./Auth/logout.route.js");
+const ForgotPassRouter = require("../routes/Auth/ForgotPass.route.js");
 
-//use the imported routers
+// Use the imported routers with correct paths
+router.use(ForgotPassRouter);
 router.use(logoutRouter);
 router.use(migrateRouter);
 router.use(signupRouter);
