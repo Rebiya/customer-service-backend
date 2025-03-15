@@ -73,6 +73,36 @@ async function getUserByEmail(user_email) {
     return [];
   }
 }
+const checkIfUserExists = async (user_email) => {
+  try {
+    if (!user_email) {
+      console.error("❌ checkIfUserExists: Email is undefined or null.");
+      return false;
+    }
+
+    const trimmedEmail = user_email.trim().toLowerCase();
+    console.log("📧 Checking existence for:", trimmedEmail);
+
+    const query = "SELECT * FROM users WHERE LOWER(TRIM(user_email)) = ?";
+    const rows = await db.query(query, [trimmedEmail]);
+
+    console.log("🔍 Query Result:", rows);
+
+    if (Array.isArray(rows) && rows.length > 0) {
+      console.log("✅ User found:", rows[0]);
+      return true;
+    }
+
+    console.log("🚫 No user found with this email.");
+    return false;
+  } catch (error) {
+    console.error("❌ Database error in checkIfUserExists:", error);
+    return false;
+  }
+};
+
+
+checkIfUserExists("rebiya.musema-ug@aau.edu.et").then(console.log);
 
 
 module.exports = {
@@ -81,5 +111,6 @@ module.exports = {
   getUserById,
   updateUser,
   deleteUser,
-  getUserByEmail
+  getUserByEmail,
+  checkIfUserExists,
 };

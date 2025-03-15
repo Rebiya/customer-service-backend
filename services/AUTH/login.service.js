@@ -72,12 +72,6 @@ const login = async (userData) => {
     const accessToken = generateAccessToken(user);
     const refreshToken = generateRefreshToken(user);
 
-    // ✅ Fix: Temporarily removed refresh_token update due to column error
-    // await db.query(`UPDATE users SET refresh_token = ? WHERE user_id = ?`, [
-    //   refreshToken,
-    //   user.user_id,
-    // ]);
-
     return {
       status: "success",
       message: "Login successful",

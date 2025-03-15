@@ -49,23 +49,24 @@ const signup = async (userData) => {
       user_phone_number,
       role_id,
     } = userData;
+
     const userEmail = user_email?.trim().toLowerCase();
     console.log("📧 Normalized Email:", userEmail);
 
-    // Check if user already exists
-    const existingUser = await userService.getUserByEmail(userEmail);
-    console.log("🔍 Checking existing user:", existingUser);
+    // ✅ Check if user exists
+    const userExists = await userService.checkIfUserExists(userEmail);
+    console.log("👤 Does user exist?", userExists);
 
-    if (existingUser) {
+    if (userExists) {
       console.log("🚫 User already exists, rejecting signup.");
       return { status: "fail", message: "User already exists" };
     }
 
-    // Hash password securely
+    // ✅ Hash password securely
     const hashedPassword = await bcrypt.hash(user_pass, 10);
 
-    // Insert user into database
-    const [result] = await db.query(
+    // ✅ Insert user into database
+    const result = await db.query(
       "INSERT INTO users (user_email, user_pass, user_first_name, user_last_name, user_phone_number, role_id) VALUES (?, ?, ?, ?, ?, ?)",
       [
         userEmail,
@@ -77,25 +78,39 @@ const signup = async (userData) => {
       ]
     );
 
-    // Fetch newly created user
-    const [[user]] = await db.query("SELECT * FROM users WHERE user_id = ?", [
-      result.insertId,
-    ]);
+    console.log("🛠 Insert result:", result);
 
-    if (!user) {
+    if (!result || !result.insertId) {
+      console.error("🚨 Database insert failed:", result);
       return { status: "fail", message: "User registration failed" };
     }
 
-    // Generate tokens
-    const accessToken = generateAccessToken(user);
-    const refreshToken = generateRefreshToken(user);
+    console.log("✅ User successfully inserted with ID:", result.insertId);
+
+    // ✅ Fetch newly created user
+    const userRows = await db.query("SELECT * FROM users WHERE user_id = ?", [
+      result.insertId,
+    ]);
+
+    console.log("🛠 User fetched after insertion:", userRows);
+
+    if (!userRows || userRows.length === 0) {
+      console.error("🚨 User retrieval failed after signup.");
+      return { status: "fail", message: "User retrieval failed after signup." };
+    }
+
+    const newUser = userRows[0];
+
+    // ✅ Generate tokens
+    const accessToken = generateAccessToken(newUser);
+    const refreshToken = generateRefreshToken(newUser);
 
     return {
       status: "success",
       message: "Signup successful",
       accessToken,
       refreshToken,
-      user,
+      user: newUser,
     };
   } catch (error) {
     console.error("❌ Error during signup:", error);

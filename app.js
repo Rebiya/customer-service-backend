@@ -4,10 +4,10 @@ require("dotenv").config();
 const query = require("./Config/db.config");
 const cors = require("cors");
 const expressSanitizer = require("express-sanitizer"); // Fixed sanitization issue
-
+const cookieParser = require("cookie-parser");
 // Create an Express application
 const app = express();
-
+app.use(cookieParser());
 // CORS configuration to handle cross-origin requests
 const allowedOrigins = [process.env.FRONTEND_URL, "http://localhost:5173"];
 const corsOptions = {
