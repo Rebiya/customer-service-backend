@@ -26,37 +26,44 @@ async function createUser(user) {
   return await db.query(query, values); // No changes needed for this.
 }
 
-// Get user by ID
-async function getUserById(user_id) {
-  const query = `SELECT * FROM users WHERE user_id = ?`;
-  const rows = await db.query(query, [user_id]); // No need for destructuring
-  return rows.length ? rows[0] : null; // Check length of rows directly
+// Get user by UUID
+async function getUserByUuid(uuid) {
+  const query = `SELECT * FROM users WHERE uuid = ?`;
+  const rows = await db.query(query, [uuid]);
+  return rows.length ? rows[0] : null;
 }
-
-// Update user (fixes missing parameters)
-async function updateUser(user_id, userData) {
+async function updateUserByUuid(uuid, userData) {
   const query = `
     UPDATE users 
-    SET user_first_name = ?, user_last_name = ?, user_email = ?, user_phone_number = ?, user_img = ?, role_id = ?
-    WHERE user_id = ?`;
+    SET user_first_name = ?, 
+        user_last_name = ?, 
+        user_email = ?, 
+        user_phone_number = ?, 
+        user_img = ?, 
+        role_id = ?
+    WHERE uuid = ?`;
 
   const values = [
-    userData.user_first_name,
-    userData.user_last_name,
-    userData.user_email,
-    userData.user_phone_number || null,
-    userData.user_img || null,
-    userData.role_id,
-    user_id,
+    userData.user_first_name || "", 
+    userData.user_last_name || "", 
+    userData.user_email || "", 
+    userData.user_phone_number ?? null, 
+    userData.user_img ?? null, 
+    userData.role_id ?? 1, 
+    uuid, 
   ];
 
-  return await db.query(query, values); // No changes needed for this.
+  if (!uuid) {
+    throw new Error("UUID is required for updating a user.");
+  }
+
+  return await db.query(query, values);
 }
 
-// Delete user
-async function deleteUser(user_id) {
-  const query = `DELETE FROM users WHERE user_id = ?`;
-  return await db.query(query, [user_id]); // No changes needed for this.
+// Delete user by UUID
+async function deleteUserByUuid(uuid) {
+  const query = `DELETE FROM users WHERE uuid = ?`;
+  return await db.query(query, [uuid]);
 }
 
 // Get user by email (updated to handle single row return)
@@ -108,9 +115,9 @@ const checkIfUserExists = async (user_email) => {
 module.exports = {
   getAllUsers,
   createUser,
-  getUserById,
-  updateUser,
-  deleteUser,
+  getUserByUuid,
+  updateUserByUuid,
+  deleteUserByUuid,
   getUserByEmail,
   checkIfUserExists,
 };

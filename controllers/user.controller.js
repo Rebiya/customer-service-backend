@@ -12,10 +12,10 @@ const getAllUsers = async (req, res) => {
   }
 };
 
-// Get user by ID
-const getUserById = async (req, res) => {
+// Get user by UUID
+const getUserByUuid = async (req, res) => {
   try {
-    const user = await userService.getUserById(req.params.id);
+    const user = await userService.getUserByUuid(req.params.uuid);
     if (!user) return res.status(404).json({ message: "User not found" });
     return res.status(200).json({ user });
   } catch (error) {
@@ -44,14 +44,24 @@ const createUser = async (req, res) => {
   }
 };
 
-// Update user
-const updateUser = async (req, res) => {
+//update user by uuid
+const updateUserByUuid = async (req, res) => {
   try {
-    const { id } = req.params;
+    const { uuid } = req.params;
     const updatedData = req.body;
 
-    const user = await userService.updateUser(id, updatedData);
-    if (!user) return res.status(404).json({ message: "User not found" });
+    if (!uuid) {
+      return res.status(400).json({ message: "UUID is required" });
+    }
+
+    if (!updatedData || Object.keys(updatedData).length === 0) {
+      return res.status(400).json({ message: "No data provided for update" });
+    }
+
+    const result = await userService.updateUserByUuid(uuid, updatedData);
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ message: "User not found" });
+    }
 
     return res.status(200).json({ message: "User updated successfully" });
   } catch (error) {
@@ -60,11 +70,11 @@ const updateUser = async (req, res) => {
   }
 };
 
-// Delete user
-const deleteUser = async (req, res) => {
+// Delete user by UUID
+const deleteUserByUuid = async (req, res) => {
   try {
-    const { id } = req.params;
-    const result = await userService.deleteUser(id);
+    const { uuid } = req.params;
+    const result = await userService.deleteUserByUuid(uuid);
     if (result.affectedRows === 0)
       return res.status(404).json({ message: "User not found" });
 
@@ -74,11 +84,10 @@ const deleteUser = async (req, res) => {
     return res.status(500).json({ message: "Error deleting user", error });
   }
 };
-
 module.exports = {
   getAllUsers,
   createUser,
-  getUserById,
-  updateUser,
-  deleteUser,
+  getUserByUuid,
+  updateUserByUuid,
+  deleteUserByUuid,
 };
