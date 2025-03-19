@@ -10,14 +10,13 @@ const signup = async (req, res) => {
     console.log("🔄 User Response from signupService:", user);
 
     if (user.status === "fail") {
-      return res.status(400).json({ message: user.message, status: "fail" }); 
+      return res.status(400).json({ message: user.message, status: "fail" });
     }
 
     return res.status(201).json({
       message: "Signup successful",
       status: "success",
       accessToken: user.accessToken,
-      user: user.user,
     });
   } catch (error) {
     console.error("❌ Signup error:", error);

@@ -14,6 +14,7 @@ const generateAccessToken = (user) => {
       user_img: user.user_img,
       active_user_status: user.active_user_status,
       role_id: user.role_id,
+      uuid: user.uuid,
     },
     process.env.JWT_SECRET,
     { expiresIn: "1h" }
@@ -57,7 +58,7 @@ const signup = async (userData) => {
         user_first_name,
         user_last_name,
         user_phone_number,
-        role_id,
+        role_id ?? 1,
       ]
     );
 
@@ -91,7 +92,6 @@ const signup = async (userData) => {
       status: "success",
       message: "Signup successful",
       accessToken,
-      user: newUser,
     };
   } catch (error) {
     console.error("❌ Error during signup:", error);
@@ -99,4 +99,4 @@ const signup = async (userData) => {
   }
 };
 
-module.exports = { signup, generateAccessToken};
+module.exports = { signup, generateAccessToken };
