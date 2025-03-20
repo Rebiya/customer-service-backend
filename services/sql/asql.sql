@@ -111,3 +111,47 @@ INSERT INTO statuses (status_name, status_type) VALUES
 ('pending', 'license'), ('active', 'license'), ('expired', 'license'), ('revoked', 'license');
 
 INSERT INTO business_types (type_name) VALUES ('Retail'), ('Manufacturing'), ('Services'), ('Technology'), ('Trade');
+
+
+INSERT INTO users (
+  user_email, user_first_name, user_last_name, user_phone_number, role_id, user_pass, user_img
+) VALUES
+  ('johnn@gmail.com', 'John', 'Doe', '1234567890', 1, '12345678', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ8T_qrrKzaiZokZ5Y8l_hz-h_6Pzj-DJys_w&s'),
+  ('janee@gmail.com', 'Jane', 'Smith', '2345678901', 1, '12345678', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTLqCg_3dCP0CG8v9ztaqOKtbSbJbEr6o_iOQ&s'),
+  ('alicee@gmail.com', 'Alice', 'Johnson', '3456789012', 1, '12345678', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSZZ8xKo-l7EQNR0os9O3OKd5X4q8SNhssdJQ&s'),
+  ('bobb@gmail.com', 'Bob', 'Brown', '4567890123', 1, '12345678', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSNNRqKoghIDo3Vefq59_pyxm3TMTFnMYzOzg&s'),
+  ('charliee@gmail.com', 'Charlie', 'Davis', '5678901234', 1, '12345678', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS8831pQ8Y-mFTGjw0zrJ3sCH_1KjLl6pF3DQ&s'),
+  ('dianaa@gmail.com', 'Diana', 'Evans', '6789012345', 1, '12345678', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTIRJ5nwuV-FX7K8xtX9kIYnmdasrXn6CBPoQ&s'),
+  ('edwardd@gmail.com', 'Edward', 'Frank', '7890123456', 1, '12345678', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQJJkcgOCs3dwl7VeptyT6WcCXA6b_sd4bg_Q&s'),
+  ('fionaa@gmail.com', 'Fiona', 'Green', '8901234567', 1, '12345678', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQOibf_zMJrX5wOi_b7YoUcT_i4tV0fsWfhFw&s'),
+  ('georgea@gmail.com', 'George', 'Harris', '9012345678', 1, '12345678', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTD85pBxRQ0vjJ5ajID5hCnlEMobWI-NSMizw&s'),
+  ('hannaha@gmail.com', 'Hannah', 'Irwin', '0123456789', 1, '12345678', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQe7EAoMGaAGwlrkB8MPGCx9FlM3dkhDx9ogg&s'),
+  ('iana@gmail.com', 'Ian', 'Jackson', '1234509876', 1, '12345678', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQSjCSCXNlUhqvZb3uftPqf1it_e8zRZDoFAw&s'),
+  ('jessicaa@gmail.com', 'Jessica', 'Klein', '2345610987', 1, '12345678', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQjBuBxieYD3is7BkWlBOfSKwzu4ihbEhUdSA&s'),
+  ('kevina@gmail.com', 'Kevin', 'Lee', '3456721098', 1, '12345678', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQSjCSCXNlUhqvZb3uftPqf1it_e8zRZDoFAw&s'),
+  ('lauraa@gmail.com', 'Laura', 'Miller', '4567832109', 1, '12345678', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQjBuBxieYD3is7BkWlBOfSKwzu4ihbEhUdSA&s'),
+  ('michaela@gmail.com', 'Michael', 'Nelson', '5678943210', 1, '12345678', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR6W9BALM7btBgMEl_yvuhcnDNiiFC1dNIrWw&s');
+  ('johnns@gmail.com', 'John', 'Doe', '1234567890', 1, '12345678', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQSjCSCXNlUhqvZb3uftPqf1it_e8zRZDoFAw&s'),
+  ('jsanee@gmail.com', 'Jane', 'Smith', '2345678901', 1, '12345678', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTGLXtwBBIP7-UAmoBFiPAwnERNB9vMyrwXLA&s'),
+  ('alsicee@gmail.com', 'Alice', 'Johnson', '3456789012', 1, '12345678', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSSK8i4bR54Qc3xq7Z8zHd37MrfXoA0zkoNUg&s'),
+  ('bobsb@gmail.com', 'Bob', 'Brown', '4567890123', 1, '12345678', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSxc9_yufDCMwbluzYkFlzen8Ci_vaS9-aiWQ&s'),
+  ('charsliee@gmail.com', 'Charlie', 'Davis', '5678901234', 1, '12345678', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTCAJxecQqwPZkkgeuN4fmjFRRVpehulJCCzw&s'),
+  ('dianasa@gmail.com', 'Diana', 'Evans', '6789012345', 1, '12345678', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4ksAOG1-tG_yKIOWWD8Jpa28LFZm3yRq43g&s'),
+  ('edwardsd@gmail.com', 'Edward', 'Frank', '7890123456', 1, '12345678', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT19n3qHK4WbySB45to_jKamN-18T93gmzpHQ&s'),
+  ('fionaas@gmail.com', 'Fiona', 'Green', '8901234567', 1, '12345678', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTykr0VOrHc1lwdT5f60gtVaYysegdovE5SKg&s'),
+  ('georgesa@gmail.com', 'George', 'Harris', '9012345678', 1, '12345678', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQR6chgWjQI1k04UVoCvBc1sO1ft3rTCff9Tw&s'),
+  ('hannahsa@gmail.com', 'Hannah', 'Irwin', '0123456789', 1, '12345678', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTWDIydYkAwU2zol8o73C1r7RNwJYdjCrWLFw&s'),
+  ('ianas@gmail.com', 'Ian', 'Jackson', '1234509876', 1, '12345678', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQCwPnzHSLxGd1hkFuNEf7CaiBGGuMkApY_XA&s'),
+  ('jsessicaa@gmail.com', 'Jessica', 'Klein', '2345610987', 1, '12345678', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSH-flqtGi3hZCmUNXa4ZX_n3INw2WBLpQcpg&s'),
+  ('kesvina@gmail.com', 'Kevin', 'Lee', '3456721098', 1, '12345678', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTrKGuVOlBAp0O8A6RiWxMRsAOq_9MyRZ2QFQ&s'),
+  ('lausraa@gmail.com', 'Laura', 'Miller', '4567832109', 2, '12345678', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQsg1DL5h3xZ6mqoITXFP6T0zsK1j1Y9gq2tA&s'),
+  ('johnnn@gmail.com', 'John', 'Doe', '1234567890', 2, '12345678', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ8T_qrrKzaiZokZ5Y8l_hz-h_6Pzj-DJys_w&s'),
+  ('janeee@gmail.com', 'Jane', 'Smith', '2345678901', 2, '12345678', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTLqCg_3dCP0CG8v9ztaqOKtbSbJbEr6o_iOQ&s'),
+  ('aliceee@gmail.com', 'Alice', 'Johnson', '3456789012', 2, '12345678', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSZZ8xKo-l7EQNR0os9O3OKd5X4q8SNhssdJQ&s'),
+  ('bobnb@gmail.com', 'Bob', 'Brown', '4567890123', 2, '12345678', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSNNRqKoghIDo3Vefq59_pyxm3TMTFnMYzOzg&s'),
+  ('chareliee@gmail.com', 'Charlie', 'Davis', '5678901234', 2, '12345678', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS8831pQ8Y-mFTGjw0zrJ3sCH_1KjLl6pF3DQ&s'),
+  ('dianaan@gmail.com', 'Diana', 'Evans', '6789012345', 2, '12345678', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTIRJ5nwuV-FX7K8xtX9kIYnmdasrXn6CBPoQ&s'),
+  ('edwaredd@gmail.com', 'Edward', 'Frank', '7890123456', 2, '12345678', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQJJkcgOCs3dwl7VeptyT6WcCXA6b_sd4bg_Q&s'),
+  ('michsaela@gmail.com', 'Michael', 'Nelson', '5678943210', 1, '12345678', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR6W9BALM7btBgMEl_yvuhcnDNiiFC1dNIrWw&s');
+
+
