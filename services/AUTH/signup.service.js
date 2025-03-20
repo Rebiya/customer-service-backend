@@ -26,19 +26,19 @@ const signup = async (userData) => {
 
   try {
     const {
-      user_email,
-      user_pass,
       user_first_name,
       user_last_name,
+      user_email,
+      user_pass,
       user_phone_number,
       role_id,
     } = userData;
 
-    const userEmail = user_email?.trim().toLowerCase();
-    console.log("📧 Normalized Email:", userEmail);
+    const normalizedEmail = user_email?.trim().toLowerCase();
+    console.log("📧 Normalized Email:", normalizedEmail);
 
     // ✅ Check if user exists
-    const userExists = await userService.checkIfUserExists(userEmail);
+    const userExists = await userService.checkIfUserExists(normalizedEmail);
     console.log("👤 Does user exist?", userExists);
 
     if (userExists) {
@@ -49,14 +49,14 @@ const signup = async (userData) => {
     // ✅ Hash password securely
     const hashedPassword = await bcrypt.hash(user_pass, 10);
 
-    // ✅ Insert user into database
+    // ✅ Insert user into database (Corrected Mapping)
     const result = await db.query(
-      "INSERT INTO users (user_email, user_pass, user_first_name, user_last_name, user_phone_number, role_id) VALUES (?, ?, ?, ?, ?, ?)",
+      "INSERT INTO users (user_email, user_first_name, user_last_name, user_pass, user_phone_number, role_id) VALUES (?, ?, ?, ?, ?, ?)",
       [
-        userEmail,
+        normalizedEmail, // Corrected
+        user_first_name, // Corrected
+        user_last_name, // Corrected
         hashedPassword,
-        user_first_name,
-        user_last_name,
         user_phone_number,
         role_id ?? 1,
       ]
@@ -75,8 +75,6 @@ const signup = async (userData) => {
     const userRows = await db.query("SELECT * FROM users WHERE user_id = ?", [
       result.insertId,
     ]);
-
-    console.log("🛠 User fetched after insertion:", userRows);
 
     if (!userRows || userRows.length === 0) {
       console.error("🚨 User retrieval failed after signup.");
