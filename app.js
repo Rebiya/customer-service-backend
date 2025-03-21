@@ -8,11 +8,13 @@ const expressSanitizer = require("express-sanitizer"); // Fixed sanitization iss
 // Create an Express application
 const app = express();
 
-// Allow all origins
+// Allow all origins and handle preflight requests
 const corsOptions = {
   origin: "*", // Allow all origins
   credentials: true, // Allows cookies and auth headers
-  optionsSuccessStatus: 200,
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE", // Allow all HTTP methods
+  preflightContinue: false, // Disable preflight caching
+  optionsSuccessStatus: 204, // Return 204 for preflight requests
 };
 
 // Apply middleware
