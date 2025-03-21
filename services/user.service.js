@@ -74,11 +74,11 @@ async function getUserByEmail(user_email) {
     const query = `SELECT * FROM users WHERE LOWER(TRIM(user_email)) = ?`;
     const rows = await db.query(query, [trimmedEmail]);
 
-    console.log("Query Result:", rows); // Debugging log
+    // console.log("Query Result:", rows); // Debugging log
 
     return rows.length ? rows[0] : null; // Return the first row if available
   } catch (error) {
-    console.error("Database Error:", error);
+    // console.error("Database Error:", error);
     return null; // Return null in case of error
   }
 }
@@ -87,27 +87,27 @@ async function getUserByEmail(user_email) {
 const checkIfUserExists = async (user_email) => {
   try {
     if (!user_email) {
-      console.error("❌ checkIfUserExists: Email is undefined or null.");
+      // console.error("❌ checkIfUserExists: Email is undefined or null.");
       return false;
     }
 
     const trimmedEmail = user_email.trim().toLowerCase();
-    console.log("📧 Checking existence for:", trimmedEmail);
+    // console.log("📧 Checking existence for:", trimmedEmail);
 
     const query = "SELECT * FROM users WHERE LOWER(TRIM(user_email)) = ?";
     const rows = await db.query(query, [trimmedEmail]);
 
-    console.log("🔍 Query Result:", rows);
+    // console.log("🔍 Query Result:", rows);
 
     if (rows.length > 0) {
-      console.log("✅ User found:", rows[0]);
+      // console.log("✅ User found:", rows[0]);
       return true;
     }
 
-    console.log("🚫 No user found with this email.");
+    // console.log("🚫 No user found with this email.");
     return false;
   } catch (error) {
-    console.error("❌ Database error in checkIfUserExists:", error);
+    // console.error("❌ Database error in checkIfUserExists:", error);
     return false;
   }
 };

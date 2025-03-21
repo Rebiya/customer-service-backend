@@ -18,7 +18,8 @@ const ForgotPass = async (req, res) => {
 
     return res.status(200).json({ message: "Password updated successfully" });
   } catch (error) {
-    console.error("❌ Forgot password error:", error);
+    console.error("❌ Forgot password error:", error);//
+    
     return res
       .status(500)
       .json({ message: "Internal server error during password reset." });

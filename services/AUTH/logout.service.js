@@ -14,7 +14,7 @@ const logout = async (token) => {
 
     return { status: "success", message: "Token invalidated client-side" };
   } catch (error) {
-    console.error("❌ Error during logout:", error);
+    // console.error("❌ Error during logout:", error);
     return { status: "fail", message: "Invalid or expired token" };
   }
 };

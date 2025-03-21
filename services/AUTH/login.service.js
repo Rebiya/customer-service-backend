@@ -23,22 +23,22 @@ const generateAccessToken = (user) => {
 
 
 const login = async (userData) => {
-  console.log("📩 Login Request Received:", userData);
+  // console.log("📩 Login Request Received:", userData);
 
   try {
     const userEmail = userData.user_email?.trim().toLowerCase();
-    console.log("📧 Normalized Email:", userEmail);
+    // console.log("📧 Normalized Email:", userEmail);
 
     // Fetch user from database
     const user = await userService.getUserByEmail(userEmail);
-    console.log("👤 User Found:", user);
+    // console.log("👤 User Found:", user);
 
     if (!user) {
       return { status: "fail", message: "User does not exist" };
     }
 
     if (!user.user_pass) {
-      console.error("❌ Error: User record is missing 'user_pass'");
+      // console.error("❌ Error: User record is missing 'user_pass'");
       return { status: "fail", message: "Invalid user data." };
     }
 
@@ -60,7 +60,7 @@ const login = async (userData) => {
       accessToken,
     };
   } catch (error) {
-    console.error("❌ Error during login:", error);
+    // console.error("❌ Error during login:", error);
     return { status: "fail", message: "An error occurred during login." };
   }
 };

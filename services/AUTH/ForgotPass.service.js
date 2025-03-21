@@ -29,7 +29,7 @@ const ForgotPass = async (user_email, new_password) => {
 
     return { status: "success", message: "Password updated successfully" };
   } catch (error) {
-    console.error("❌ Error during password reset:", error);
+    // console.error("❌ Error during password reset:", error);
     return {
       status: "fail",
       message: "An error occurred while updating password.",
