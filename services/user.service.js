@@ -44,13 +44,13 @@ async function updateUserByUuid(uuid, userData) {
     WHERE uuid = ?`;
 
   const values = [
-    userData.user_first_name || "", 
-    userData.user_last_name || "", 
-    userData.user_email || "", 
-    userData.user_phone_number ?? null, 
-    userData.user_img ?? null, 
-    userData.role_id ?? 1, 
-    uuid, 
+    userData.user_first_name || "",
+    userData.user_last_name || "",
+    userData.user_email || "",
+    userData.user_phone_number ?? null,
+    userData.user_img ?? null,
+    userData.role_id ?? 1,
+    uuid,
   ];
 
   if (!uuid) {
@@ -111,6 +111,13 @@ const checkIfUserExists = async (user_email) => {
     return false;
   }
 };
+const getUsersByRole = async (roleId) => {
+  const sql = `SELECT user_id, user_email, user_first_name, user_last_name, user_phone_number, role_id, active_user_status, user_added_date, user_img 
+               FROM users WHERE role_id = ?`;
+
+  return await db.query(sql, [roleId]);
+};
+
 
 module.exports = {
   getAllUsers,
@@ -120,4 +127,5 @@ module.exports = {
   deleteUserByUuid,
   getUserByEmail,
   checkIfUserExists,
+  getUsersByRole,
 };

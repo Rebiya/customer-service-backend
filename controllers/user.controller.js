@@ -84,10 +84,32 @@ const deleteUserByUuid = async (req, res) => {
     return res.status(500).json({ message: "Error deleting user", error });
   }
 };
+const getUsersByRole = async (req, res) => {
+  const { roleId } = req.params;
+
+  // Validate roleId
+  if (!roleId || isNaN(roleId)) {
+    return res.status(400).json({ message: "Invalid role ID" });
+  }
+
+  try {
+    const users = await userService.getUsersByRole(roleId);
+
+    if (users.length === 0) {
+      return res.status(404).json({ message: "No users found for this role" });
+    }
+
+    res.status(200).json(users);
+  } catch (error) {
+    console.error("Error fetching users:", error.message);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
 module.exports = {
   getAllUsers,
   createUser,
   getUserByUuid,
   updateUserByUuid,
   deleteUserByUuid,
+  getUsersByRole,
 };
