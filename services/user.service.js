@@ -112,7 +112,7 @@ const checkIfUserExists = async (user_email) => {
   }
 };
 const getUsersByRole = async (roleId) => {
-  const sql = `SELECT user_id, user_email, user_first_name, user_last_name, user_phone_number, role_id, active_user_status, user_added_date, user_img 
+  const sql = `SELECT user_id, user_email, user_first_name, user_last_name, user_phone_number, role_id, active_user_status, user_added_date, user_img,uuid 
                FROM users WHERE role_id = ?`;
 
   return await db.query(sql, [roleId]);
