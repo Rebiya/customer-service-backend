@@ -4,6 +4,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
 const generateAccessToken = (user) => {
+  
   return jwt.sign(
     {
       user_id: user.user_id,
@@ -35,14 +36,14 @@ const signup = async (userData) => {
     } = userData;
 
     const normalizedEmail = user_email?.trim().toLowerCase();
-    // console.log("📧 Normalized Email:", normalizedEmail);
+    console.log("📧 Normalized Email:", normalizedEmail);
 
     // ✅ Check if user exists
     const userExists = await userService.checkIfUserExists(normalizedEmail);
-    // console.log("👤 Does user exist?", userExists);
+    console.log("👤 Does user exist?", userExists);
 
     if (userExists) {
-      // console.log("🚫 User already exists, rejecting signup.");
+      console.log("🚫 User already exists, rejecting signup.");
       return { status: "fail", message: "User already exists" };
     }
 
@@ -62,14 +63,14 @@ const signup = async (userData) => {
       ]
     );
 
-    // console.log("🛠 Insert result:", result);
+    console.log("🛠 Insert result:", result);
 
     if (!result || !result.insertId) {
-      // console.error("🚨 Database insert failed:", result);
+      console.error("🚨 Database insert failed:", result);
       return { status: "fail", message: "User registration failed" };
     }
 
-    // console.log("✅ User successfully inserted with ID:", result.insertId);
+    console.log("✅ User successfully inserted with ID:", result.insertId);
 
     // ✅ Fetch newly created user
     const userRows = await db.query("SELECT * FROM users WHERE user_id = ?", [
@@ -77,7 +78,7 @@ const signup = async (userData) => {
     ]);
 
     if (!userRows || userRows.length === 0) {
-      // console.error("🚨 User retrieval failed after signup.");
+      console.error("🚨 User retrieval failed after signup.");
       return { status: "fail", message: "User retrieval failed after signup." };
     }
 
@@ -92,7 +93,7 @@ const signup = async (userData) => {
       accessToken,
     };
   } catch (error) {
-    // console.error("❌ Error during signup:", error);
+    console.error("❌ Error during signup:", error);
     return { status: "fail", message: "An error occurred during signup." };
   }
 };

@@ -25,7 +25,6 @@ app.use(expressSanitizer()); // Fix: Correct sanitizer middleware
 // Import and use routes
 const router = require("./routes");
 app.use("/api", router);
-
 // Set port
 const port = process.env.PORT || 3000;
 
