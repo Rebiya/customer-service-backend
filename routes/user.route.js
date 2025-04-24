@@ -25,6 +25,6 @@ router.get(
   authMiddleware([2,3]),
   userController.getUsersByRole
 );
-router.post("/users", userController.createUser);
+router.post("/users",  authMiddleware([3]), userController.createUser);
 
 module.exports = router;

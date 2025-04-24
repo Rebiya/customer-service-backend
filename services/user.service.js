@@ -34,6 +34,27 @@ async function getUserByUuid(uuid) {
   return rows.length ? rows[0] : null;
 }
 async function updateUserByUuid(uuid, userData) {
+  if (!uuid) {
+    throw new Error("UUID is required for updating a user.");
+  }
+
+  // 1. Fetch current user data
+  const existingUser = await getUserByUuid(uuid);
+  if (!existingUser) {
+    throw new Error("User not found.");
+  }
+
+  // 2. Merge new data with existing data
+  const updatedData = {
+    user_first_name: userData.user_first_name ?? existingUser.user_first_name,
+    user_last_name: userData.user_last_name ?? existingUser.user_last_name,
+    user_email: userData.user_email ?? existingUser.user_email,
+    user_phone_number: userData.user_phone_number ?? existingUser.user_phone_number,
+    user_img: userData.user_img ?? existingUser.user_img,
+    role_id: userData.role_id ?? existingUser.role_id,
+  };
+
+  // 3. Update query
   const query = `
     UPDATE users 
     SET user_first_name = ?, 
@@ -45,21 +66,18 @@ async function updateUserByUuid(uuid, userData) {
     WHERE uuid = ?`;
 
   const values = [
-    userData.user_first_name || "",
-    userData.user_last_name || "",
-    userData.user_email || "",
-    userData.user_phone_number ?? null,
-    userData.user_img ?? null,
-    userData.role_id ?? 1,
+    updatedData.user_first_name,
+    updatedData.user_last_name,
+    updatedData.user_email,
+    updatedData.user_phone_number,
+    updatedData.user_img,
+    updatedData.role_id,
     uuid,
   ];
 
-  if (!uuid) {
-    throw new Error("UUID is required for updating a user.");
-  }
-
   return await db.query(query, values);
 }
+
 
 // Delete user by UUID
 async function deleteUserByUuid(uuid) {
