@@ -11,15 +11,15 @@ const dbConfig = {
 
 const pool = mysql.createPool(dbConfig);
 
-// Test Database Connection
+// Test DB Connection
 (async () => {
   try {
     const conn = await pool.getConnection();
-    // console.log("✅ Database connection successful");
+    console.log("✅ Database connection successful");
     conn.release();
   } catch (err) {
-    // console.error("❌ Database connection failed:", err.message);
-    process.exit(1); // Stop the server if DB connection fails
+    console.error("❌ Database connection failed:", err.message);
+    process.exit(1);
   }
 })();
 
@@ -28,8 +28,8 @@ async function query(sql, params) {
     const [rows] = await pool.execute(sql, params);
     return rows;
   } catch (error) {
-    // console.error("Database Query Error:", error.message);
-    throw new Error("Database operation failed");
+    console.error("❌ SQL Error:", error); // Keep this for dev
+    throw error; // Pass real error to service/controller
   }
 }
 

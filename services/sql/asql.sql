@@ -112,7 +112,6 @@ INSERT INTO statuses (status_name, status_type) VALUES
 
 INSERT INTO business_types (type_name) VALUES ('Retail'), ('Manufacturing'), ('Services'), ('Technology'), ('Trade');
 
-
 INSERT INTO users (
   user_email, user_first_name, user_last_name, user_phone_number, role_id, user_pass, user_img
 ) VALUES
@@ -130,7 +129,7 @@ INSERT INTO users (
   ('jessicaa@gmail.com', 'Jessica', 'Klein', '2345610987', 1, '12345678', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQjBuBxieYD3is7BkWlBOfSKwzu4ihbEhUdSA&s'),
   ('kevina@gmail.com', 'Kevin', 'Lee', '3456721098', 1, '12345678', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQSjCSCXNlUhqvZb3uftPqf1it_e8zRZDoFAw&s'),
   ('lauraa@gmail.com', 'Laura', 'Miller', '4567832109', 1, '12345678', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQjBuBxieYD3is7BkWlBOfSKwzu4ihbEhUdSA&s'),
-  ('michaela@gmail.com', 'Michael', 'Nelson', '5678943210', 1, '12345678', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR6W9BALM7btBgMEl_yvuhcnDNiiFC1dNIrWw&s');
+  ('michaela@gmail.com', 'Michael', 'Nelson', '5678943210', 1, '12345678', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR6W9BALM7btBgMEl_yvuhcnDNiiFC1dNIrWw&s'),
   ('johnns@gmail.com', 'John', 'Doe', '1234567890', 1, '12345678', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQSjCSCXNlUhqvZb3uftPqf1it_e8zRZDoFAw&s'),
   ('jsanee@gmail.com', 'Jane', 'Smith', '2345678901', 1, '12345678', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTGLXtwBBIP7-UAmoBFiPAwnERNB9vMyrwXLA&s'),
   ('alsicee@gmail.com', 'Alice', 'Johnson', '3456789012', 1, '12345678', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSSK8i4bR54Qc3xq7Z8zHd37MrfXoA0zkoNUg&s'),
@@ -153,5 +152,3 @@ INSERT INTO users (
   ('dianaan@gmail.com', 'Diana', 'Evans', '6789012345', 2, '12345678', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTIRJ5nwuV-FX7K8xtX9kIYnmdasrXn6CBPoQ&s'),
   ('edwaredd@gmail.com', 'Edward', 'Frank', '7890123456', 2, '12345678', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQJJkcgOCs3dwl7VeptyT6WcCXA6b_sd4bg_Q&s'),
   ('michsaela@gmail.com', 'Michael', 'Nelson', '5678943210', 1, '12345678', 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR6W9BALM7btBgMEl_yvuhcnDNiiFC1dNIrWw&s');
-
-

@@ -17,14 +17,15 @@ async function createUser(user) {
     user.user_first_name,
     user.user_last_name,
     user.user_email,
-    user.user_phone_number || null, // Allow null phone numbers
-    user.user_pass, // Already hashed in controller
-    user.user_img || null, // Allow null images
-    user.role_id || 1, // Default role: 1 (if not provided)
+    user.user_phone_number || null,
+    user.user_pass,
+    user.user_img || null,
+    user.role_id || 1,
   ];
 
-  return await db.query(query, values); // No changes needed for this.
+  return await db.query(query, values);
 }
+
 
 // Get user by UUID
 async function getUserByUuid(uuid) {
